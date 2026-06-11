@@ -1,1 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sofía Fernández Medina</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --white-warm: #FFFCFA;
+      --bg-base: #FFF8F9;
+      --bg-mint: #F2FAF7;
+      --bg-section-alt: #FFF0F5;
+      --card-bg: rgba(255,245,248,0.80);
+      --card-bg-hover: rgba(255,235,242,0.92);
+      --accent-rose: #F0A8BE;
+      --accent-rose-deep: #C96B8A;
+      --accent-mint: #A8D4C2;
+      --accent-mint-light: #D4EDE6;
+      --petal-blush: #F9D0DE;
+      --petal-cream: #FDF0E6;
+      --text-primary: #3A2030;
+      --text-secondary: #9A6478;
+      --text-light: #C4A0B0;
+      --tag-bg: rgba(240,168,190,0.18);
+      --tag-text: #A05070;
+      --border-soft: rgba(240,168,190,0.30);
+      --shadow-petal: 0 6px 28px rgba(212,120,154,0.10);
+      --shadow-hover: 0 14px 44px rgba(212,120,154,0.18);
+      --footer-bg: #FDE8F0;
+      --status-press-bg: #E8F5EE;
+      --status-press-text: #2D6E45;
+      --status-dev-bg: #FDF6E3;
+      --status-dev-text: #7A5A00;
+      --status-conf-bg: #EEE8F8;
+      --status-conf-text: #4A3580;
+    }
 
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-color: var(--accent-rose) var(--bg-base);
+      scrollbar-width: thin;
+    }
+    ::-webkit-scrollbar { width: 7px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--petal-blush), var(--accent-rose)); border-radius: 4px; }
+
+    ::selection { background: var(--accent-rose); color: var(--text-primary); }
+
+    body {
+      background: var(--bg-base);
+      background-image:
+        radial-gradient(ellipse at 15% 50%, rgba(249,208,222,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 15%, rgba(168,212,194,0.18) 0%, transparent 50%);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      color: var(--text-primary);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    a { color: var(--accent-rose-deep); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    *:focus-visible { outline: 2px solid var(--accent-rose); outline-offset: 3px; }
+
+    /* PROGRESS BAR */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--accent-mint), var(--accent-rose), var(--petal-blush));
+      z-index: 9999; transition: none;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 3px; left: 0; right: 0; z-index: 999;
+      background: rgba(255,248,249,0.90);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(240,168,190,0.25);
+      padding: 13px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500; font-style: italic;
+      font-size: 17px; color: var(--accent-rose-deep);
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-family: 'Lato', sans-serif; font-weight: 400;
+      font-size: 12px; letter-spacing: 0.10em; text-transform: uppercase;
+      color: var(--text-secondary); text-decoration: none;
+      padding-bottom: 2px; border-bottom: 1.5px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent-rose-deep);
+      border-bottom-color: var(--accent-rose);
+    }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--accent-rose-deep); border-radius: 2px;
+      transition: 0.2s;
+    }
+    .mobile-menu {
+      display: none; position: fixed; top: 48px; left: 0; right: 0;
+      background: rgba(255,248,249,0.97); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-soft);
+      padding: 16px 24px; z-index: 998; flex-direction: column; gap: 14px;
+    }
+    .mobile-menu a {
+      font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-secondary); text-decoration: none;
+    }
+    .mobile-menu.open { display: flex; }
+
+    /* LAYOUT */
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    /* SECTION DIVIDER */
+    .divider {
+      width: 100%; height: 24px; margin: 0;
+      overflow: visible;
+    }
+
+    /* FADE IN ANIMATION */
+    .fade-in {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* HERO */
+    #about {
+      padding: 130px 24px 90px;
+      position: relative; overflow: hidden;
+      background: linear-gradient(155deg, #FFF8F9 0%, #FFE8F2 45%, #F5F8FF 100%);
+      text-align: center;
+    }
+    .hero-svg-tr {
+      position: absolute; top: -10px; right: -20px;
+      width: 170px; height: 200px; opacity: 0.32; pointer-events: none;
+    }
+    .hero-svg-bl {
+      position: absolute; bottom: 10px; left: -15px;
+      width: 130px; height: 155px; opacity: 0.28; pointer-events: none;
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: clamp(38px, 6vw, 58px);
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+    .hero-role {
+      font-family: 'Lato', sans-serif; font-weight: 400;
+      font-size: 13px; letter-spacing: 0.13em; text-transform: uppercase;
+      color: var(--text-secondary); margin-bottom: 28px;
+      min-height: 20px;
+    }
+    .cursor { display: inline-block; color: var(--accent-rose); animation: blink 1s step-end 8; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .hero-divider {
+      width: 60px; height: 1px; margin: 0 auto 28px;
+      background: linear-gradient(90deg, transparent, var(--accent-rose), transparent);
+      border: none;
+    }
+    .hero-bio {
+      max-width: 620px; margin: 0 auto 32px;
+      font-size: 16px; color: var(--text-primary);
+    }
+    .hero-bio p + p { margin-top: 16px; }
+
+    /* TAGS */
+    .tags {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+      max-width: 680px; margin: 0 auto;
+    }
+    .tag {
+      position: relative;
+      background: var(--tag-bg); color: var(--tag-text);
+      border: 1px solid rgba(240,168,190,0.28);
+      border-radius: 999px; padding: 6px 15px;
+      font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 400;
+      cursor: default;
+    }
+    .tag-tooltip {
+      position: absolute; bottom: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%);
+      background: var(--text-primary); color: #FFF8F9;
+      border-radius: 10px; padding: 8px 12px;
+      font-size: 12px; font-weight: 300; line-height: 1.5;
+      white-space: nowrap; max-width: 240px; white-space: normal;
+      text-align: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      transform: translateX(-50%) translateY(4px);
+      z-index: 10;
+    }
+    .tag:hover .tag-tooltip {
+      opacity: 1; transform: translateX(-50%) translateY(0);
+    }
+
+    /* STATS */
+    .stats-strip {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-soft);
+      border-radius: 18px; padding: 36px 24px;
+      margin: 52px 0;
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 0 16px;
+      border-right: 1px solid var(--border-soft);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600; font-size: 42px;
+      color: var(--accent-rose-deep);
+      letter-spacing: -0.02em;
+      display: block;
+    }
+    .stat-label {
+      font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--text-secondary); font-weight: 400;
+    }
+
+    /* SECTIONS */
+    section { padding: 80px 0; }
+    section:nth-child(even) { background: var(--bg-section-alt); }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500; font-size: 30px;
+      color: var(--text-primary); margin-bottom: 8px;
+    }
+    .section-intro {
+      font-size: 15px; color: var(--text-secondary);
+      max-width: 580px; margin-bottom: 40px;
+    }
+
+    /* RESEARCH ARC */
+    .research-arc {
+      display: flex; align-items: flex-start;
+      justify-content: space-between;
+      position: relative; margin-bottom: 44px;
+      padding: 0 10px;
+    }
+    .arc-line {
+      position: absolute; top: 7px; left: 30px; right: 30px; height: 1px;
+      background: none;
+      border-top: 1.5px dashed var(--accent-mint);
+      z-index: 0;
+    }
+    .arc-node {
+      display: flex; flex-direction: column; align-items: center;
+      position: relative; z-index: 1; flex: 1; cursor: default;
+    }
+    .arc-dot {
+      width: 16px; height: 16px; border-radius: 50%;
+      margin-bottom: 10px; transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .arc-dot.filled { background: var(--accent-rose-deep); }
+    .arc-dot.outline { background: transparent; border: 2px solid var(--accent-rose); }
+    .arc-node:hover .arc-dot { transform: scale(1.3); }
+    .arc-date {
+      font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-light); margin-bottom: 3px; text-align: center;
+    }
+    .arc-label {
+      font-size: 13px; color: var(--text-secondary);
+      text-align: center; max-width: 140px; line-height: 1.4;
+    }
+
+    /* FILTER BUTTONS */
+    .filter-row {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;
+    }
+    .filter-btn {
+      border-radius: 999px; padding: 7px 18px;
+      font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 400;
+      cursor: pointer; transition: 0.2s ease; border: 1px solid var(--border-soft);
+      background: var(--tag-bg); color: var(--tag-text);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--accent-rose); color: white; border-color: transparent;
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-soft);
+      border-radius: 18px; padding: 28px 32px;
+      margin-bottom: 20px; box-shadow: var(--shadow-petal);
+      transition: transform 0.22s ease-out, box-shadow 0.22s ease-out, opacity 0.25s ease;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+    .card.hidden { display: none; }
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500; font-size: 17px;
+      color: var(--text-primary); line-height: 1.45; flex: 1;
+    }
+    .status-tag {
+      border-radius: 999px; padding: 4px 12px;
+      font-size: 11px; font-weight: 400; letter-spacing: 0.07em;
+      text-transform: uppercase; white-space: nowrap; flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .tag-press { background: var(--status-press-bg); color: var(--status-press-text); }
+    .tag-conf { background: var(--status-conf-bg); color: var(--status-conf-text); }
+    .tag-dev { background: var(--status-dev-bg); color: var(--status-dev-text); }
+    .card-meta {
+      font-size: 13px; color: var(--text-secondary);
+      margin-bottom: 10px; font-style: italic;
+    }
+    .card-venue {
+      font-size: 13px; color: var(--text-light);
+      margin-bottom: 10px;
+    }
+    .card-desc { font-size: 15px; color: var(--text-primary); line-height: 1.7; }
+    .card-expand-btn {
+      background: none; border: none; cursor: pointer;
+      font-family: 'Lato', sans-serif; font-size: 13px;
+      color: var(--accent-rose-deep); margin-top: 12px;
+      padding: 0; display: flex; align-items: center; gap: 5px;
+      transition: 0.15s;
+    }
+    .card-expand-btn:hover { color: var(--text-primary); }
+    .card-expand-btn .arrow { transition: transform 0.2s; display: inline-block; }
+    .card-expand-btn.open .arrow { transform: rotate(180deg); }
+    .card-expanded {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    .card-expanded.open { max-height: 300px; opacity: 1; }
+    .card-expanded-inner {
+      padding-top: 14px; font-size: 14px; color: var(--text-secondary);
+      border-top: 1px solid var(--border-soft); margin-top: 14px;
+      line-height: 1.7;
+    }
+
+    /* POSTER BUTTON */
+    .poster-btn {
+      display: inline-block; margin-top: 14px;
+      border: 1.5px solid var(--accent-rose); background: transparent;
+      color: var(--accent-rose-deep); border-radius: 10px;
+      padding: 9px 20px; font-family: 'Lato', sans-serif;
+      font-size: 13px; font-weight: 400; cursor: pointer;
+      transition: 0.2s ease;
+    }
+    .poster-btn:hover {
+      background: var(--accent-rose); color: white;
+      transform: translateY(-2px); border-color: transparent;
+    }
+
+    /* PROGRESS TRACKER */
+    .progress-tracker {
+      display: flex; align-items: center;
+      gap: 0; margin-top: 20px; flex-wrap: wrap;
+    }
+    .progress-step {
+      padding: 6px 13px; font-size: 12px; font-weight: 400;
+      letter-spacing: 0.03em; border-radius: 8px;
+      white-space: nowrap;
+    }
+    .progress-step.active {
+      background: var(--accent-rose); color: white;
+    }
+    .progress-step.done {
+      background: var(--accent-rose-deep); color: white;
+    }
+    .progress-step.upcoming {
+      background: var(--tag-bg); color: var(--text-light);
+    }
+    .progress-arrow {
+      font-size: 11px; color: var(--border-soft);
+      padding: 0 4px; flex-shrink: 0;
+    }
+
+    /* ACADEMIC SERVICE */
+    .academic-service {
+      margin-top: 32px; padding: 20px 24px;
+      background: rgba(255,245,248,0.6);
+      border-left: 2px solid var(--accent-rose);
+      border-radius: 0 10px 10px 0;
+    }
+    .academic-service p {
+      font-size: 14px; color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .academic-service p:last-child { margin-bottom: 0; }
+
+    /* CLINICAL TIMELINE */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 5px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-rose), var(--accent-mint));
+      border-radius: 2px;
+    }
+    .timeline-item { position: relative; margin-bottom: 32px; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -26px; top: 6px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent-rose);
+      border: 2px solid var(--petal-blush);
+      z-index: 1;
+    }
+    .timeline-role {
+      font-family: 'Lato', sans-serif; font-weight: 400;
+      font-size: 15px; color: var(--text-primary);
+    }
+    .timeline-place {
+      font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .timeline-desc { font-size: 14px; color: var(--text-secondary); }
+
+    /* UPDATES */
+    .update-entry {
+      border-bottom: 1px solid var(--border-soft);
+      padding: 20px 0;
+    }
+    .update-entry:last-child { border-bottom: none; }
+    .update-header {
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; gap: 12px;
+    }
+    .update-date {
+      font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase;
+      color: var(--text-light); font-weight: 400; white-space: nowrap;
+    }
+    .update-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500; font-size: 17px;
+      color: var(--text-primary); flex: 1;
+    }
+    .update-toggle {
+      font-size: 18px; color: var(--accent-rose);
+      font-weight: 300; transition: transform 0.2s;
+      flex-shrink: 0; user-select: none; line-height: 1;
+    }
+    .update-toggle.open { transform: rotate(45deg); }
+    .update-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    .update-body.open { max-height: 500px; opacity: 1; }
+    .update-body-inner {
+      padding-top: 14px; font-size: 15px; color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* CONTACT */
+    .contact-text {
+      font-size: 16px; color: var(--text-secondary);
+      max-width: 520px; margin-bottom: 32px;
+    }
+    .contact-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px;
+    }
+    .contact-label {
+      font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-light); width: 70px; flex-shrink: 0;
+    }
+    .copy-btn {
+      background: none; border: 1px solid var(--border-soft);
+      border-radius: 6px; padding: 3px 10px;
+      font-size: 12px; color: var(--text-secondary);
+      cursor: pointer; transition: 0.15s;
+    }
+    .copy-btn:hover { background: var(--tag-bg); }
+    .cv-btn {
+      display: inline-block; margin-top: 28px;
+      border: 1.5px solid var(--accent-rose); background: transparent;
+      color: var(--accent-rose-deep); border-radius: 10px;
+      padding: 11px 28px; font-family: 'Lato', sans-serif;
+      font-size: 14px; font-weight: 400; letter-spacing: 0.04em;
+      cursor: pointer; text-decoration: none;
+      transition: 0.2s ease;
+    }
+    .cv-btn:hover {
+      background: linear-gradient(135deg, var(--petal-blush), var(--accent-rose));
+      color: white; border-color: transparent;
+      transform: translateY(-2px); text-decoration: none;
+    }
+
+    /* EDUCATION */
+    .education-block {
+      margin-top: 40px; padding-top: 28px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .edu-item { margin-bottom: 10px; }
+    .edu-degree {
+      font-size: 14px; color: var(--text-primary); font-weight: 400;
+    }
+    .edu-place {
+      font-size: 13px; color: var(--text-light);
+    }
+
+    /* FOOTER */
+    footer {
+      background: linear-gradient(135deg, var(--footer-bg), #FFF0F0);
+      padding: 36px 24px; text-align: center;
+    }
+    footer p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 14px;
+      color: var(--text-secondary); margin-bottom: 4px;
+    }
+    footer small {
+      font-size: 13px; color: var(--text-light);
+    }
+
+    /* BACK TO TOP */
+    #back-top {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--petal-blush), var(--accent-rose));
+      color: white; border: none; cursor: pointer;
+      font-family: 'Playfair Display', serif; font-size: 18px;
+      box-shadow: 0 4px 16px rgba(212,120,154,0.30);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.2s, background 0.2s;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 900;
+    }
+    #back-top.visible { opacity: 1; pointer-events: all; }
+    #back-top:hover {
+      background: linear-gradient(135deg, var(--accent-rose), var(--accent-rose-deep));
+      transform: translateY(-3px);
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(58,32,48,0.72);
+      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+      z-index: 9000; display: none;
+      align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: rgba(255,248,249,0.98);
+      border-radius: 20px; max-width: 820px; width: 100%;
+      max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 32px 80px rgba(212,120,154,0.25);
+      padding: 32px;
+      position: relative;
+    }
+    .modal-header {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 15px;
+      color: var(--text-secondary); margin-bottom: 20px;
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 20px;
+      background: none; border: none; font-size: 24px;
+      color: var(--text-light); cursor: pointer; line-height: 1;
+      transition: color 0.15s;
+    }
+    .modal-close:hover { color: var(--accent-rose-deep); }
+    #poster-image {
+      width: 100%; border-radius: 10px;
+      display: block;
+    }
+    .poster-placeholder {
+      border: 2px dashed var(--accent-rose);
+      background: var(--bg-section-alt);
+      border-radius: 10px; height: 400px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 24px;
+    }
+    .poster-placeholder p {
+      font-size: 14px; color: var(--text-light);
+      font-style: italic; line-height: 1.6; max-width: 340px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      nav { padding: 12px 16px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      #about { padding: 100px 16px 70px; }
+      .stats-strip { grid-template-columns: 1fr; gap: 20px; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border-soft); padding: 0 0 20px; }
+      .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+      .research-arc { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .arc-line { display: none; }
+      .arc-node { flex-direction: row; gap: 12px; align-items: flex-start; }
+      .arc-dot { margin-bottom: 0; flex-shrink: 0; margin-top: 4px; }
+      .arc-label { text-align: left; }
+      .card { padding: 22px 20px; }
+      .progress-tracker { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .progress-arrow { display: none; }
+      .container { padding: 0 16px; }
+      section { padding: 60px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reading progress bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <span class="nav-logo">S.F.M.</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#clinical">Clinical</a></li>
+      <li><a href="#updates">Updates</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#research" onclick="closeMenu()">Research</a>
+    <a href="#clinical" onclick="closeMenu()">Clinical</a>
+    <a href="#updates" onclick="closeMenu()">Updates</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="about">
+    <!-- Orchid SVG top right -->
+    <svg class="hero-svg-tr" viewBox="0 0 170 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="pg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F9D0DE" stop-opacity="0.9"/><stop offset="100%" stop-color="#FFF5F7" stop-opacity="0.25"/></linearGradient>
+        <linearGradient id="pg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0A8BE" stop-opacity="0.85"/><stop offset="100%" stop-color="#FFF0F5" stop-opacity="0.20"/></linearGradient>
+      </defs>
+      <ellipse cx="85" cy="50" rx="34" ry="56" fill="url(#pg1)" transform="rotate(-20 85 100)"/>
+      <ellipse cx="85" cy="50" rx="34" ry="56" fill="url(#pg2)" transform="rotate(52 85 100)"/>
+      <ellipse cx="85" cy="50" rx="34" ry="56" fill="url(#pg1)" transform="rotate(124 85 100)"/>
+      <ellipse cx="85" cy="50" rx="34" ry="56" fill="url(#pg2)" transform="rotate(196 85 100)"/>
+      <ellipse cx="85" cy="50" rx="34" ry="56" fill="url(#pg1)" transform="rotate(268 85 100)"/>
+      <circle cx="85" cy="100" r="18" fill="#FDF0E6" opacity="0.7"/>
+      <circle cx="85" cy="100" r="8" fill="#F0C080" opacity="0.55"/>
+    </svg>
+    <!-- Small branch bottom left -->
+    <svg class="hero-svg-bl" viewBox="0 0 130 155" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="pg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F9D0DE" stop-opacity="0.8"/><stop offset="100%" stop-color="#FFF5F7" stop-opacity="0.2"/></linearGradient>
+      </defs>
+      <path d="M65 140 Q50 100 70 60 Q80 30 65 10" stroke="#A8D4C2" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+      <ellipse cx="55" cy="85" rx="18" ry="28" fill="url(#pg3)" transform="rotate(-30 55 85)"/>
+      <ellipse cx="78" cy="65" rx="16" ry="25" fill="url(#pg3)" transform="rotate(15 78 65)"/>
+      <ellipse cx="60" cy="40" rx="14" ry="22" fill="url(#pg3)" transform="rotate(-10 60 40)"/>
+      <circle cx="62" cy="85" r="6" fill="#FDF0E6" opacity="0.6"/>
+      <circle cx="80" cy="65" r="5" fill="#FDF0E6" opacity="0.55"/>
+      <circle cx="63" cy="38" r="5" fill="#FDF0E6" opacity="0.55"/>
+    </svg>
+
+    <div class="container">
+      <h1 class="hero-name fade-in">Sofía Fernández Medina</h1>
+      <p class="hero-role"><span id="typewriter"></span><span class="cursor" id="cursor">|</span></p>
+      <hr class="hero-divider">
+      <div class="hero-bio fade-in">
+        <p>I am drawn to psychology because of what it asks us to do: to look carefully at human beings and resist easy explanations. What interests me most is not behaviour as a surface phenomenon, but the processes underneath — how people regulate emotion, construct meaning in relationships, make sense of themselves and others, and navigate a social world that was not always designed with them in mind. I am particularly interested in women, whose inner lives have historically been misread, pathologised, or simply not studied on their own terms.</p>
+        <p>My research sits at the intersection of mentalization theory, trauma-informed practice, and transdiagnostic assessment. I am interested in what happens when women present with complex socioemotional difficulties that do not fit neatly into a single diagnostic category — and that require clinical formulation attentive to neurodevelopment, attachment, trauma history, and the function of symptoms over time. I believe that more careful science in this area leads to more humane clinical care.</p>
+      </div>
+      <div class="tags fade-in">
+        <span class="tag">Mentalization<span class="tag-tooltip">The capacity to understand behaviour in terms of mental states in oneself and others</span></span>
+        <span class="tag">Autism in Women<span class="tag-tooltip">Late diagnosis, phenotypic differences, and gender-specific presentations of autism</span></span>
+        <span class="tag">Late Diagnosis<span class="tag-tooltip">Clinical and personal consequences of receiving an ASD diagnosis in adulthood</span></span>
+        <span class="tag">Complex Trauma<span class="tag-tooltip">Prolonged relational trauma and its effects on self, attachment, and regulation</span></span>
+        <span class="tag">Borderline Personality<span class="tag-tooltip">Emotional dysregulation, identity instability, and interpersonal patterns</span></span>
+        <span class="tag">Emotion Regulation<span class="tag-tooltip">The processes by which individuals modulate their emotional experience</span></span>
+        <span class="tag">Social Cognition<span class="tag-tooltip">The ability to process and apply information about other people</span></span>
+        <span class="tag">Differential Assessment<span class="tag-tooltip">Distinguishing overlapping clinical presentations in formulation</span></span>
+        <span class="tag">Epistemic Trust<span class="tag-tooltip">The capacity to receive social knowledge as relevant and trustworthy</span></span>
+        <span class="tag">Alexithymia<span class="tag-tooltip">Difficulty identifying and describing one's own emotional states</span></span>
+        <span class="tag">Dissociation<span class="tag-tooltip">Disruption of consciousness or identity following trauma</span></span>
+        <span class="tag">Attachment<span class="tag-tooltip">Early relational patterns and their persistence across development</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="container">
+    <div class="stats-strip fade-in">
+      <div class="stat-item">
+        <span class="stat-number" data-target="1200" data-suffix="+">0</span>
+        <span class="stat-label">Supervised clinical hours</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="3" data-suffix="">0</span>
+        <span class="stat-label">Years of research training</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="1" data-suffix="">0</span>
+        <span class="stat-label">Article in press</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="container">
+      <h2 class="section-title fade-in">Research</h2>
+      <p class="section-intro fade-in">My work focuses on mentalization-based approaches, phenotypic overlap across diagnostic categories, and trauma-informed differential assessment in adult women.</p>
+
+      <!-- Research Arc -->
+      <div class="research-arc fade-in">
+        <div class="arc-line"></div>
+        <div class="arc-node">
+          <div class="arc-dot filled"></div>
+          <span class="arc-date">2024–2025</span>
+          <span class="arc-label">Systematic Review — MBT, BPD &amp; ASD</span>
+        </div>
+        <div class="arc-node">
+          <div class="arc-dot filled"></div>
+          <span class="arc-date">May 2026</span>
+          <span class="arc-label">International Conference — Paris</span>
+        </div>
+        <div class="arc-node">
+          <div class="arc-dot outline"></div>
+          <span class="arc-date">2026 –</span>
+          <span class="arc-label">Differential Assessment — ASD, BPD &amp; Complex Trauma in Women</span>
+        </div>
+      </div>
+
+      <!-- Filter buttons -->
+      <div class="filter-row fade-in">
+        <button class="filter-btn active" onclick="filterCards('all', this)">All</button>
+        <button class="filter-btn" onclick="filterCards('publications', this)">Publications</button>
+        <button class="filter-btn" onclick="filterCards('conferences', this)">Conferences</button>
+        <button class="filter-btn" onclick="filterCards('in-development', this)">In Development</button>
+      </div>
+
+      <!-- Card 1: In Press -->
+      <div class="card fade-in" data-category="publications">
+        <div class="card-header">
+          <h3 class="card-title">Mentalization-Based Treatment for Social Cognition and Emotional Regulation in Adults with Borderline Personality Disorder and Autism Spectrum Disorder: A Systematic Review</h3>
+          <span class="status-tag tag-press">In Press</span>
+        </div>
+        <p class="card-meta">Fernández Medina, S., Vidal Gutiérrez, J., &amp; Duarte Díaz, A. (in press)</p>
+        <p class="card-venue"><em>Advances in Autism</em>, Emerald Publishing</p>
+        <p class="card-desc">Systematic review examining the evidence base for Mentalization-Based Treatment targeting social cognition and emotion regulation across BPD and ASD in adults. Accepted and awaiting final editorial revisions.</p>
+        <button class="card-expand-btn" onclick="toggleExpand(this)" aria-expanded="false">
+          Read more <span class="arrow">↓</span>
+        </button>
+        <div class="card-expanded">
+          <div class="card-expanded-inner">
+            Full text available upon publication. This review synthesises evidence for MBT as an intervention addressing shared clinical dimensions across borderline personality disorder and autism spectrum disorder in adult populations, with a focus on emotion regulation and social cognition as transdiagnostic targets.
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Conference -->
+      <div class="card fade-in" data-category="conferences" style="transition-delay: 0.08s">
+        <div class="card-header">
+          <h3 class="card-title">Mentalization-Based Treatment for Emotional Regulation and Social Cognition Across Borderline Personality Disorder and Autism Spectrum Disorder: A Systematic Review and Clinical Implications</h3>
+          <span class="status-tag tag-conf">Conference</span>
+        </div>
+        <p class="card-meta">Fernández Medina, S., Vidal Gutiérrez, J., &amp; Duarte Díaz, A. (2026, May)</p>
+        <p class="card-venue">8th International MBT Conference: Turbulence and Mentalizing — Challenges and Opportunities · Paris, France</p>
+        <p class="card-desc">Poster presented at the international MBT Conference in Paris summarising findings and clinical implications of the systematic review on MBT, BPD, and ASD.</p>
+        <button class="poster-btn" onclick="openModal()" aria-label="View conference poster">View Poster</button>
+      </div>
+
+      <!-- Card 3: In Development -->
+      <div class="card fade-in" data-category="in-development" style="transition-delay: 0.16s">
+        <div class="card-header">
+          <h3 class="card-title">Overlapping and Differentiating Clinical Dimensions Between Late-Diagnosed Autism, Borderline Personality Disorder, and Complex Trauma/CPTSD in Adult Women</h3>
+          <span class="status-tag tag-dev">In Development</span>
+        </div>
+        <p class="card-desc">Trauma-informed systematic review with structured narrative synthesis. Examines phenotypic overlap and differential indicators across masking, emotion regulation, social cognition, trauma history, alexithymia, and dissociation in adult women. Designed to inform a future differential assessment matrix.</p>
+        <div class="progress-tracker">
+          <span class="progress-step active">Protocol Design</span>
+          <span class="progress-arrow">›</span>
+          <span class="progress-step upcoming">Search Strategy</span>
+          <span class="progress-arrow">›</span>
+          <span class="progress-step upcoming">Screening</span>
+          <span class="progress-arrow">›</span>
+          <span class="progress-step upcoming">Data Extraction</span>
+          <span class="progress-arrow">›</span>
+          <span class="progress-step upcoming">Synthesis</span>
+        </div>
+      </div>
+
+      <!-- Academic Service -->
+      <div class="academic-service fade-in">
+        <p>Ad hoc peer reviewer · <em>Advances in Autism</em>, Emerald Publishing</p>
+        <p>Nominee · International Final Degree Project Research Award in Psychology</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLINICAL -->
+  <section id="clinical">
+    <div class="container">
+      <h2 class="section-title fade-in">Clinical Background</h2>
+      <p class="section-intro fade-in">Over 1,200 supervised clinical hours across child, adolescent, and adult settings in Spain.</p>
+      <div class="timeline fade-in">
+        <div class="timeline-item">
+          <p class="timeline-role">Clinical Psychologist</p>
+          <p class="timeline-place">MindGroup, S.L. · Feb – Jun 2026</p>
+          <p class="timeline-desc">Adult assessment and intervention. CBT, transdiagnostic, metacognitive, and schema-focused approaches including the Unified Protocol.</p>
+        </div>
+        <div class="timeline-item">
+          <p class="timeline-role">Psychologist</p>
+          <p class="timeline-place">Centro Psicológico Umay · Jan – Jun 2025</p>
+          <p class="timeline-desc">Supervised individual and group work with children and adolescents. Play-based and structured therapeutic approaches.</p>
+        </div>
+        <div class="timeline-item">
+          <p class="timeline-role">Assistant Psychologist</p>
+          <p class="timeline-place">Centro Psicopedagógico Garoé Sur · Jan – Jun 2024</p>
+          <p class="timeline-desc">Child, adolescent, and adult populations including neurodevelopmental disorders. Solution-Focused Brief Therapy and Narrative Therapy.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPDATES -->
+  <section id="updates">
+    <div class="container">
+      <h2 class="section-title fade-in">Updates</h2>
+      <p class="section-intro fade-in">A record of small advances, methodological decisions, and milestones from ongoing work.</p>
+
+      <!-- To add a new entry: duplicate a .update-entry div and fill in date, title, and body -->
+
+      <div class="update-entry fade-in">
+        <div class="update-header" onclick="toggleUpdate(this)" role="button" tabindex="0" aria-expanded="false">
+          <div>
+            <span class="update-date">June 2026</span>
+            <p class="update-title">Protocol under construction</p>
+          </div>
+          <span class="update-toggle">+</span>
+        </div>
+        <div class="update-body">
+          <div class="update-body-inner">
+            Developing the search strategy and inclusion/exclusion criteria for the systematic review on late-diagnosed autism, BPD, and complex trauma in adult women. PROSPERO registration in progress. This stage involves defining the PICO framework, selecting databases, and drafting Boolean search strings for PubMed, PsycINFO, Scopus, Web of Science, and CINAHL.
+          </div>
+        </div>
+      </div>
+
+      <div class="update-entry fade-in" style="transition-delay:0.08s">
+        <div class="update-header" onclick="toggleUpdate(this)" role="button" tabindex="0" aria-expanded="false">
+          <div>
+            <span class="update-date">May 2026</span>
+            <p class="update-title">Paris</p>
+          </div>
+          <span class="update-toggle">+</span>
+        </div>
+        <div class="update-body">
+          <div class="update-body-inner">
+            Presented a poster at the 8th International MBT Conference in Paris on mentalization-based treatment, emotion regulation, and social cognition in BPD and ASD. The paper on which it is based is currently in press at <em>Advances in Autism</em>. The conference brought together clinicians and researchers working on mentalizing approaches across clinical populations.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title fade-in">Contact</h2>
+      <p class="contact-text fade-in">I am open to academic collaboration, research discussions, and peer review requests. Currently based in Madrid, completing a Master's in Clinical Health Psychology at Universidad Camilo José Cela.</p>
+      <div class="fade-in">
+        <div class="contact-row">
+          <span class="contact-label">Email</span>
+          <a href="mailto:Sofia.fmedina@alumno.ucjc.edu">Sofia.fmedina@alumno.ucjc.edu</a>
+          <button class="copy-btn" onclick="copyEmail(this)" aria-label="Copy email">Copy</button>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">LinkedIn</span>
+          <a href="https://linkedin.com/in/sofía-fernández-medina-b714a1232" target="_blank" rel="noopener">linkedin.com/in/sofía-fernández-medina</a>
+        </div>
+        <a href="cv.pdf" download class="cv-btn">Download CV</a>
+      </div>
+
+      <div class="education-block fade-in">
+        <div class="edu-item">
+          <p class="edu-degree">Master's Degree in Clinical Health Psychology</p>
+          <p class="edu-place">Universidad Camilo José Cela · 2025 – 2027</p>
+        </div>
+        <div class="edu-item">
+          <p class="edu-degree">Degree in Psychology</p>
+          <p class="edu-place">Universidad Europea de Canarias · 2021 – 2025</p>
+        </div>
+        <div class="edu-item">
+          <p class="edu-degree">Cambridge Advanced English Certificate, C1</p>
+          <p class="edu-place">Spanish, native</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© Sofía Fernández Medina · <span id="year"></span></p>
+    <small>Madrid, Spain · Sofia.fmedina@alumno.ucjc.edu</small>
+  </footer>
+
+  <!-- BACK TO TOP -->
+  <button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+  <!-- POSTER MODAL -->
+  <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-label="Conference poster">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
+      <p class="modal-header">Poster · 8th International MBT Conference, Paris · May 2026</p>
+      <div id="poster-container">
+        <!-- Replace the poster-placeholder div below with: <img id="poster-image" src="poster.jpg" alt="Conference poster" style="width:100%;border-radius:10px;display:block;"> -->
+        <div class="poster-placeholder">
+          <p>Poster image placeholder — replace this block with an &lt;img&gt; tag pointing to your poster file (e.g. src="poster.jpg")</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu
+    function toggleMenu() {
+      document.getElementById('mobile-menu').classList.toggle('open');
+    }
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+    }
+
+    // Progress bar
+    window.addEventListener('scroll', function() {
+      const h = document.documentElement;
+      const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+      document.getElementById('progress-bar').style.width = pct + '%';
+      document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
+    });
+
+    // Typewriter
+    (function() {
+      const text = 'Psychology researcher · Master\'s student in General Health Psychology';
+      const el = document.getElementById('typewriter');
+      const cur = document.getElementById('cursor');
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          el.textContent += text[i++];
+          setTimeout(type, 38);
+        } else {
+          setTimeout(() => { cur.style.opacity = '0'; }, 5000);
+        }
+      }
+      setTimeout(type, 600);
+    })();
+
+    // Scroll animations
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Stats counter trigger
+          if (entry.target.classList.contains('stats-strip')) {
+            animateCounters();
+          }
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+
+    // Stats counter
+    let countersRan = false;
+    function animateCounters() {
+      if (countersRan) return;
+      countersRan = true;
+      document.querySelectorAll('.stat-number').forEach(function(el) {
+        const target = parseInt(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1800;
+        const start = performance.now();
+        function update(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(eased * target).toLocaleString() + suffix;
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+      });
+    }
+
+    // Active nav on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', function() {
+      let current = '';
+      sections.forEach(function(s) {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // Filter cards
+    function filterCards(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.card[data-category]').forEach(function(card) {
+        if (cat === 'all' || card.dataset.category === cat) {
+          card.classList.remove('hidden');
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(12px)';
+          setTimeout(function() {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 30);
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // Card expand
+    function toggleExpand(btn) {
+      const expanded = btn.nextElementSibling;
+      const isOpen = expanded.classList.contains('open');
+      expanded.classList.toggle('open', !isOpen);
+      btn.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      btn.querySelector('.arrow').textContent = isOpen ? '↓' : '↑';
+    }
+
+    // Update entries
+    function toggleUpdate(header) {
+      const body = header.nextElementSibling;
+      const toggle = header.querySelector('.update-toggle');
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      toggle.classList.toggle('open', !isOpen);
+      header.setAttribute('aria-expanded', String(!isOpen));
+    }
+    document.querySelectorAll('.update-header').forEach(function(h) {
+      h.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleUpdate(h); }
+      });
+    });
+
+    // Modal
+    function openModal() {
+      document.getElementById('modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Copy email
+    function copyEmail(btn) {
+      navigator.clipboard.writeText('Sofia.fmedina@alumno.ucjc.edu').then(function() {
+        const orig = btn.textContent;
+        btn.textContent = 'Copied ✓';
+        setTimeout(function() { btn.textContent = orig; }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
